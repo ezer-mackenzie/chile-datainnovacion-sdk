@@ -1,17 +1,99 @@
 [project]
 name = "chile-datainnovacion-sdk"
 version = "0.1.0"
-description = "Add your description here"
+description = "Unofficial typed Python SDK for Chile's Data Innovacion REST API"
 readme = "README.md"
 authors = [
     { name = "Eli-ezer Reuven Ramirez Ruiz", email = "ramirez.ruiz.eliezer.reuven@gmail.com" }
 ]
-requires-python = ">=3.14"
-dependencies = []
-
-[project.scripts]
-chile-datainnovacion-sdk = "chile_datainnovacion_sdk:main"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE.md"]
+keywords = ["chile", "innovacion", "corfo", "projects", "sdk"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Typing :: Typed",
+]
+dependencies = [
+    "httpx>=0.28.1",
+    "pydantic>=2.12.0,<3",
+]
 
 [build-system]
 requires = ["uv_build>=0.12.13,<0.13.0"]
 build-backend = "uv_build"
+
+[project.urls]
+Documentation = "https://ezer-mackenzie.github.io/chile-datainnovacion-sdk/"
+Repository = "https://github.com/ezer-mackenzie/chile-datainnovacion-sdk"
+Issues = "https://github.com/ezer-mackenzie/chile-datainnovacion-sdk/issues"
+
+[tool.uv.build-backend]
+module-name = "chile_datainnovacion_sdk"
+source-include = ["AGENTS.md", "CLAUDE.md", "CODE_OF_CONTRIBUTING.md", "CONTRIBUTING.md", "docs/**", "tests/**", "examples/**", "benchmarks/**", "mkdocs.yml", "pyrightconfig.json", ".pre-commit-config.yaml", "README.md", "SECURITY.md", "CHANGELOG.md"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "C4", "DTZ", "LOG", "PIE", "RUF", "S"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106"]
+"benchmarks/**" = ["S101"]
+"src/chile_datainnovacion_sdk/constants.py" = ["S105"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers --cov=chile_datainnovacion_sdk --cov-report=term-missing"
+markers = [
+    "integration: opt-in read-only tests against the live public API",
+    "benchmark: optional local microbenchmarks",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["chile_datainnovacion_sdk"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 90
+
+[dependency-groups]
+benchcore = [
+    "benchcore[pytest]>=1.0.0,<2",
+]
+benchmark = [
+    "pytest-benchmark>=5.3.0",
+]
+dev = [
+    "basedpyright>=1.40.1",
+    "codespell>=2.4.1",
+    "hypothesis>=6.168.0",
+    "mypy>=2.3.1",
+    "pytest>=9.1.1",
+    "pytest-cov>=7.0",
+    "pre-commit>=4.6.2",
+    "pip-audit>=2.10.1",
+    "ruff>=0.16",
+]
+docs = [
+    "mkdocs-material>=9.7.7",
+    "mkdocstrings[python]>=1.0.6",
+]
+
+[tool.uv.dependency-groups]
+benchcore = { requires-python = ">=3.12" }
+
+[tool.codespell]
+skip = "uv.lock"

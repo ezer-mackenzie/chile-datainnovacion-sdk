@@ -1,0 +1,38 @@
+site_name: Chile Data Innovacion SDK
+site_description: Typed Python SDK for the Data Innovacion projects API
+site_url: https://ezer-mackenzie.github.io/chile-datainnovacion-sdk/
+repo_url: https://github.com/ezer-mackenzie/chile-datainnovacion-sdk
+repo_name: ezer-mackenzie/chile-datainnovacion-sdk
+
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - navigation.sections
+    - navigation.top
+
+nav:
+  - Home: index.md
+  - Usage: usage.md
+  - API fields: api-fields.md
+  - API reference: api-reference.md
+  - Development: development.md
+  - Releases: releasing.md
+
+markdown_extensions:
+  - admonition
+  - tables
+  - pymdownx.details
+  - pymdownx.superfences
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            members_order: source
+            show_root_heading: true
+            show_source: false

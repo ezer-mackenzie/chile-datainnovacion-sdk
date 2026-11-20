@@ -1,0 +1,18 @@
+{
+  "include": ["src", "examples"],
+  "exclude": [
+    ".cache",
+    ".venv",
+    "build",
+    "dist",
+    "site",
+    "**/__pycache__",
+    "**/.*"
+  ],
+  "extraPaths": ["src"],
+  "pythonVersion": "3.11",
+  "typeCheckingMode": "strict",
+  "reportUnnecessaryIsInstance": "error",
+  "venvPath": ".",
+  "venv": ".venv"
+}
