@@ -3,8 +3,6 @@
 from chile_datainnovacion_sdk import constants
 from chile_datainnovacion_sdk.client import (
     ChileDataInnovacionClient,
-    DataInnovacionClient,
-    DataInnovacionSDKClient,
     ProjectsService,
 )
 from chile_datainnovacion_sdk.config import ClientConfig
@@ -20,6 +18,11 @@ from chile_datainnovacion_sdk.models import (
     DataInnovacionProjectDTO,
     Project,
 )
+from chile_datainnovacion_sdk.typed import (
+    InterventionType,
+    ProjectStatus,
+    Sustainability,
+)
 
 __version__ = constants.SDK_VERSION
 
@@ -27,16 +30,17 @@ __all__ = [
     "ChileDataInnovacionClient",
     "ChileDataInnovacionError",
     "ClientConfig",
-    "DataInnovacionClient",
     "DataInnovacionConnectionError",
     "DataInnovacionError",
     "DataInnovacionHTTPError",
     "DataInnovacionProjectDTO",
     "DataInnovacionProtocolError",
-    "DataInnovacionSDKClient",
     "DataInnovacionTimeoutError",
+    "InterventionType",
     "Project",
+    "ProjectStatus",
     "ProjectsService",
+    "Sustainability",
     "__version__",
     "constants",
 ]

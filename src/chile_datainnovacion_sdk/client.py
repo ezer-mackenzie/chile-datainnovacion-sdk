@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import builtins
 from collections.abc import Mapping
 from types import TracebackType
-from typing import Any, Literal, Self
+from typing import Any, Self
 
 import httpx
 from pydantic import JsonValue
@@ -16,11 +17,12 @@ from chile_datainnovacion_sdk.errors import (
     DataInnovacionTimeoutError,
 )
 from chile_datainnovacion_sdk.models import Project
+from chile_datainnovacion_sdk.typed import (
+    InterventionType,
+    ProjectStatus,
+    Sustainability,
+)
 
-ProjectList = list[Project]
-InterventionType = Literal["Ley", "Subsidio"]
-ProjectStatus = Literal["Vigente", "Finalizado"]
-Sustainability = Literal["Sí", "No"]
 API_FILTER_NAMES = {
     "code": "codigo",
     "beneficiary_rut": "rut_beneficiario",
@@ -47,7 +49,7 @@ class ProjectsService:
         award_year: int | str | None = None,
         limit: int | None = None,
         **filters: str | int,
-    ) -> ProjectList:
+    ) -> builtins.list[Project]:
         params: dict[str, str | int] = {}
         known_filters = {
             "codigo": code,
@@ -90,7 +92,7 @@ class ProjectsService:
         award_year: int | str | None = None,
         limit: int | None = None,
         **filters: str | int,
-    ) -> ProjectList:
+    ) -> builtins.list[Project]:
         return self.list(
             code=code,
             beneficiary_rut=beneficiary_rut,
@@ -102,7 +104,7 @@ class ProjectsService:
             **filters,
         )
 
-    def _request(self, params: Mapping[str, str | int]) -> ProjectList:
+    def _request(self, params: Mapping[str, str | int]) -> builtins.list[Project]:
         if self._http.is_closed:
             raise DataInnovacionConnectionError("Client is closed")
         try:
@@ -131,7 +133,7 @@ class ProjectsService:
         if not isinstance(raw_value, list):
             raise DataInnovacionProtocolError("API response has no valid 'value' list")
         value = raw_value
-        projects: ProjectList = []
+        projects: builtins.list[Project] = []
         for item in value:
             if not isinstance(item, dict):
                 raise DataInnovacionProtocolError("A project item must be a JSON object")
@@ -216,7 +218,7 @@ class ChileDataInnovacionClient:
         award_year: int | str | None = None,
         limit: int | None = None,
         **filters: str | int,
-    ) -> ProjectList:
+    ) -> list[Project]:
         return self.projects.list(
             code=code,
             beneficiary_rut=beneficiary_rut,
@@ -230,7 +232,3 @@ class ChileDataInnovacionClient:
 
     def get_project(self, code: str) -> Project | None:
         return self.projects.get(code)
-
-
-DataInnovacionClient = ChileDataInnovacionClient
-DataInnovacionSDKClient = ChileDataInnovacionClient
