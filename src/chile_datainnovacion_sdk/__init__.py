@@ -1,10 +1,7 @@
 """Unofficial typed SDK for the Chile Data Innovacion projects API."""
 
 from chile_datainnovacion_sdk import constants
-from chile_datainnovacion_sdk.client import (
-    ChileDataInnovacionClient,
-    ProjectsService,
-)
+from chile_datainnovacion_sdk.client import ChileDataInnovacionClient
 from chile_datainnovacion_sdk.config import ClientConfig
 from chile_datainnovacion_sdk.errors import (
     ChileDataInnovacionError,
@@ -18,6 +15,7 @@ from chile_datainnovacion_sdk.models import (
     DataInnovacionProjectDTO,
     Project,
 )
+from chile_datainnovacion_sdk.services import ProjectsService
 from chile_datainnovacion_sdk.typed import (
     InterventionType,
     ProjectStatus,

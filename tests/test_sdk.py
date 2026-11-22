@@ -19,6 +19,7 @@ from chile_datainnovacion_sdk.models import (
     DataInnovacionProjectDTO,
     Project,
 )
+from chile_datainnovacion_sdk.services import ProjectsService
 
 
 def test_list_projects_builds_filters_and_parses_response() -> None:
@@ -64,6 +65,7 @@ def test_version_and_error_hierarchy() -> None:
 
 
 def test_stable_public_api_exports_only_canonical_clients() -> None:
+    assert sdk.ProjectsService is ProjectsService
     assert "ChileDataInnovacionClient" in sdk.__all__
     assert "DataInnovacionClient" not in sdk.__all__
     assert "DataInnovacionSDKClient" not in sdk.__all__
