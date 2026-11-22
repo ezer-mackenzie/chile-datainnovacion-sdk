@@ -1,6 +1,6 @@
 [project]
 name = "chile-datainnovacion-sdk"
-version = "0.1.0"
+version = "1.0.0"
 description = "Unofficial typed Python SDK for Chile's Data Innovacion REST API"
 readme = "README.md"
 authors = [
@@ -11,7 +11,7 @@ license = "MIT"
 license-files = ["LICENSE.md"]
 keywords = ["chile", "innovacion", "corfo", "projects", "sdk"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 5 - Production/Stable",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",

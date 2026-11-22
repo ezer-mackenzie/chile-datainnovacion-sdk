@@ -47,8 +47,9 @@ Values and source fields are retained as returned by the API.
 | `tech_ia` | `ai_technology` |
 | `objetivo_ia` | `ai_objective` |
 
-Unknown fields are preserved in both Pydantic models so API additions do not
-silently disappear.
+The endpoint currently returns a top-level JSON array of records. Unknown
+fields are preserved in both Pydantic models so API additions do not silently
+disappear.
 
 ## Filters
 
@@ -64,3 +65,11 @@ silently disappear.
 
 The API documentation describes the award-year range as 2010–2021. The SDK
 passes the requested value to the server and does not silently clamp it.
+
+## Result limits and pagination
+
+The documented endpoint supports `limit`. As of November 2026, read-only
+checks confirmed that `offset`, `page`, and `skip` do not advance the result
+set, so the SDK does not expose automatic pagination. A limited response may
+therefore be only a subset of the full project catalog. This should be
+rechecked if the API documents a pagination mechanism.

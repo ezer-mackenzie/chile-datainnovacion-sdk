@@ -1,6 +1,7 @@
 import httpx
 import pytest
 
+import chile_datainnovacion_sdk as sdk
 from chile_datainnovacion_sdk import (
     ChileDataInnovacionClient,
     ChileDataInnovacionError,
@@ -58,8 +59,15 @@ def test_list_projects_builds_filters_and_parses_response() -> None:
 
 
 def test_version_and_error_hierarchy() -> None:
-    assert __version__ == "0.1.0"
+    assert __version__ == "1.0.0"
     assert issubclass(DataInnovacionHTTPError, ChileDataInnovacionError)
+
+
+def test_stable_public_api_exports_only_canonical_clients() -> None:
+    assert "ChileDataInnovacionClient" in sdk.__all__
+    assert "DataInnovacionClient" not in sdk.__all__
+    assert "DataInnovacionSDKClient" not in sdk.__all__
+    assert all(hasattr(sdk, name) for name in sdk.__all__)
 
 
 def test_get_project_returns_none_when_not_found() -> None:

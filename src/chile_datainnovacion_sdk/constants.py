@@ -5,4 +5,4 @@ PUBLIC_API_TOKEN = (
     "eyJpc3MiOiJodHRwczpcL1wvZGF0YUlubm92YXRpb24uY2wiLCJuYW1lIjoicHVibGljIGFwaUtleSJ9."
     "Ofu3LI0z8uCNYTbZyXd9BeY0sWIDt2NzUBwnHxTtdsA"
 )
-SDK_VERSION = "0.1.0"
+SDK_VERSION = "1.0.0"

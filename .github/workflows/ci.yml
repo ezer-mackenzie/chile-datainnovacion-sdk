@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      run_live_tests:
+        description: Run opt-in read-only tests against the public API
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Checks (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Install Python
+        run: uv python install ${{ matrix.python-version }}
+
+      - name: Install locked development dependencies
+        run: uv sync --locked --python ${{ matrix.python-version }} --group dev --group docs
+
+      - name: Run tests and coverage
+        run: uv run --python ${{ matrix.python-version }} --locked --group dev --group docs pytest
+
+      - name: Run Ruff
+        run: |
+          uv run --python ${{ matrix.python-version }} --locked --group dev --group docs ruff check .
+          uv run --python ${{ matrix.python-version }} --locked --group dev --group docs ruff format --check .
+
+      - name: Run type checkers
+        run: |
+          uv run --python ${{ matrix.python-version }} --locked --group dev --group docs basedpyright
+          uv run --python ${{ matrix.python-version }} --locked --group dev --group docs mypy src
+
+      - name: Check spelling
+        run: uv run --python ${{ matrix.python-version }} --locked --group dev --group docs codespell README.md CHANGELOG.md CONTRIBUTING.md docs src tests examples
+
+      - name: Build documentation
+        run: uv run --python ${{ matrix.python-version }} --locked --group dev --group docs mkdocs build --strict
+
+      - name: Build distributions
+        run: uv build
+
+  live-integration:
+    name: Opt-in live API contract
+    if: github.event_name == 'workflow_dispatch' && inputs.run_live_tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Install Python and test dependencies
+        run: |
+          uv python install 3.14
+          uv sync --locked --python 3.14 --group dev
+
+      - name: Run read-only public API tests
+        env:
+          CHILE_DATAINNOVACION_LIVE_TESTS: "1"
+        run: uv run --python 3.14 --locked pytest tests/integration -m integration --no-cov -q
