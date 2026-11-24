@@ -10,6 +10,7 @@ mkdocs:
 
 python:
   install:
-    - method: pip
-      path: .
-    - requirements: docs/requirements.txt
+    - method: uv
+      command: sync
+      groups:
+        - docs
