@@ -1,6 +1,6 @@
 site_name: Chile Data Innovacion SDK
 site_description: Typed Python SDK for the Data Innovacion projects API
-site_url: https://ezer-mackenzie.github.io/chile-datainnovacion-sdk/
+site_url: https://chile-datainnovacion-sdk.readthedocs.io/en/latest/
 repo_url: https://github.com/ezer-mackenzie/chile-datainnovacion-sdk
 repo_name: ezer-mackenzie/chile-datainnovacion-sdk
 

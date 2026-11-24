@@ -59,7 +59,7 @@ Every documented API field is mapped to an English name on `Project`. Additional
 
 ## Documentation
 
-The [full documentation](https://ezer-mackenzie.github.io/chile-datainnovacion-sdk/) includes configuration, the field mapping, error handling, development, and release guides.
+The [full documentation on Read the Docs](https://chile-datainnovacion-sdk.readthedocs.io/en/latest/) includes configuration, the field mapping, error handling, development, and release guides.
 
 ## Development
 
